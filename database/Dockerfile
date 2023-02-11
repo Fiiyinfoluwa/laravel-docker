@@ -17,5 +17,5 @@ RUN chmod +x /docker-entrypoint-initdb.d/init-db.sh
 COPY my.cnf /etc/mysql/my.cnf
 
 # Expose the MySQL port
-EXPOSE 3307
+EXPOSE 3306
 
