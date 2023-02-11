@@ -1,0 +1,39 @@
+version: '3'
+services:
+  laravel-app:
+    image: laravel-app
+#    build: .
+    container_name: laravel-app
+    ports:
+      - "8000:80"
+    networks:
+      - laravel_network
+    command: php artisan migrate --seed
+    volumes:
+      - dbdata:/var/lib/mysql
+    depends_on:
+      - db
+
+#MySQL Service
+  db:
+    image: laravel_db
+#    build: ./database
+    container_name: db
+    ports:
+      - "3307:3307"
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: laravel_password
+      MYSQL_USER: laravel_user
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge
+
+volumes:
+  dbdata:
+
